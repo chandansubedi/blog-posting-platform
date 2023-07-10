@@ -1,4 +1,5 @@
 {% extends 'baseFiles/base.html' %}
+{% load crispy_forms_tags %}
 {% block title %}Home{% endblock %}
 {% block content %}
 <div class="container">
@@ -8,7 +9,7 @@
                 <div class="card-body">
                     <form method="POST">
                         {% csrf_token %}
-                        {{form}}
+                        {{form | crispy}}
                         <input type="submit" class="btn btn-primary", value="post">
                     </form>
                 </div>
