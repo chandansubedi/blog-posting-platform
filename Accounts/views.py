@@ -2,8 +2,7 @@ from django.shortcuts import render,redirect
 from django.contrib.auth.forms import UserCreationForm
 from .forms import signUpForm
 
-# Create your views here.
-
+# all about signup function 
 def sign_up(request):
     if request.method =='POST':
         form = signUpForm(request.POST)
