@@ -7,16 +7,18 @@
         <div class="col-md-5 offset-4">
             <div class="card my-3 shadow ">
                 <div class="card-body">
-                    <h2>Login</h2>
-                    <form method="POST">
+                    <h2 class="mb-4">Login</h2>
+                    <form method="POST">  
                         {% csrf_token %}
                         {{form | crispy }}
-                        <input type="submit" class="btn btn-primary", value="Login">
+                        <input type="submit" class="btn btn-primary btn-block my-4", value="Login">
                     </form>
-                    <div>
-                        <a href="">Forget Password</a>
+                    <div class="text-center my-3">
+                        <a class="text-center" href="">Forget Password</a>
                     </div>
-                    <a class=" btn btn-success" href="{% url 'sign_up' %}">Create Account</a>
+                    <div class="text-center">
+                        <a class=" my-3 btn btn-outline-success  " href="{% url 'sign_up' %}">Create Account</a>
+                    </div>
                 </div>
             </div>
         </div>

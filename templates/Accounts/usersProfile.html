@@ -1,0 +1,52 @@
+{% extends 'baseFiles/base.html' %}
+{% load crispy_forms_tags %}
+{% block title %}My Profile{% endblock %}
+{% block content %}
+<div class="container">
+    <div class="row mt-5 pt-3">
+        <div class="col-md-6 offset-md-3">
+            <div class="card my-3 shadow ">
+                <div class="card-body">
+                    <h2 class="mb-4 btn btn-primary btn-block">My Profile Information</h2>
+                    <div class="row">
+                        <div class="col-md-4">
+                            <img class="img-thumbnail" src="{{ user.accountmodel.image.url }}" alt="Profile image">
+                        </div>
+                        <div class="col-md-8">
+                            <h5>Name :{{user.username}}</h5>
+                            <h5>Email :{{user.email}}</h5>
+                        </div>
+                    </div>
+                    <!-- <span> </span> class="btn btn-outline-secondary float-right my-2"  >Edit Profile</span> -->
+                    <span><button type="button" class="btn btn-outline-secondary float-right my-2" data-toggle="modal" data-target="#exampleModal">
+                        Edit Profile
+                      </button></span>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- edit profile modal  -->
+  <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          ...
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+          <button type="button" class="btn btn-primary">Update</button>
+        </div>
+      </div>
+    </div>
+  </div>
+<!-- edit profile modal  -->
+
+{% endblock %}

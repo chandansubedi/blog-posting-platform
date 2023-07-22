@@ -15,3 +15,6 @@ def sign_up(request):
         'form':form,
     }
     return render(request,'Accounts/signup.html',context)
+
+def userProfile(request):
+    return render(request, 'accounts/usersProfile.html')
