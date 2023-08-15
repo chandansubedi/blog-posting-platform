@@ -1,0 +1,30 @@
+{% extends 'baseFiles/base.html' %}
+{% load crispy_forms_tags %}
+{% block title %}Posts {% endblock %}
+{% block content %}
+ 
+<div class="container">
+    <div class="row mt-5 pt-5">
+       <div class="col-md-8 offset-md-2">
+        <div class="card my-3 shadow">
+            <div class="card-body"> 
+                <div class="row">
+                    <div class="col-md-2">
+                        <small> <img class="img-thumbnail" src="{{post.author.accountmodel.image.url}}" alt="image1"></small>
+                     </div>
+                    <div class="col-md-10">
+                        <small>{{  post.date_created }}</small>
+                        <span><a class="btn btn-outline-secondary"  href="{% url 'edit_post' post.id %}">Edit Blog  </a></span>
+                        <span><a class="btn btn-danger " href="{% url 'delete_post' post.id %}">Delete Blog  </a></span>
+                        <hr> 
+                        <h3>{{post.title}}</h3> 
+                        <p>{{post.content}}</p>
+                    </div> 
+                </div>
+            </div>
+        </div>
+       </div>
+    </div>
+</div>
+
+{% endblock %}

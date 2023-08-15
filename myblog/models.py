@@ -13,6 +13,7 @@ class BlogModel(models.Model):
     class Meta:
         ordering = ('-date_created',)
     
+    def __str__(self):
+         return self.title
 
-def __str__(self):
-    return self.title
+

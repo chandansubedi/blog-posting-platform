@@ -16,6 +16,7 @@ def sign_up(request):
     }
     return render(request,'Accounts/signup.html',context)
 
+# edit profile of user (change details)
 def userProfile(request):
     if request.method =='POST':
         u_form = UserUpdateForm(request.POST or None ,instance=request.user )
@@ -31,7 +32,4 @@ def userProfile(request):
         'u_form':u_form,
         'p_form':p_form
     }
-
-
-
     return render(request, 'accounts/usersProfile.html',context)

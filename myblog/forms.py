@@ -5,3 +5,9 @@ class BlogModelForm(forms.ModelForm):
     class Meta:
         model = BlogModel
         fields = ('title','content')
+
+
+class BlogUpdateForm(forms.ModelForm):
+    class Meta:
+        model = BlogModel
+        fields = ('title','content')

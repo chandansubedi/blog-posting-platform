@@ -17,7 +17,7 @@ class signUpForm(UserCreationForm):
         for fieldname in ['username','email','password1','password2']:
             self.fields[fieldname].help_text = None
 
-
+ 
 class UserUpdateForm(forms.ModelForm):
     class Meta:
         model = User
