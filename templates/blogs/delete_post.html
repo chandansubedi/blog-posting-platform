@@ -11,7 +11,7 @@
                 <div class="alert alert-danger">
                  Are you sure you want to delete this blog  
                 </div>
-                <form method="post"> 
+                <form method="post">  
                     {% csrf_token %}
                     <a class="btn btn-secondary" href="{% url 'post_details' post.id %}">Cancel</a>
                     <input class="btn btn-secondary " type="submit" value="Conform" >

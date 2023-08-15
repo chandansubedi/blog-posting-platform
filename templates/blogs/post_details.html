@@ -14,8 +14,13 @@
                      </div>
                     <div class="col-md-10">
                         <small>{{  post.date_created }}</small>
+                        <br>
+                        <small> Author :{{  post.author.username }}</small>
+
+                        {% if post.author == request.user %}
                         <span><a class="btn btn-outline-secondary"  href="{% url 'edit_post' post.id %}">Edit Blog  </a></span>
                         <span><a class="btn btn-danger " href="{% url 'delete_post' post.id %}">Delete Blog  </a></span>
+                        {% endif %}
                         <hr> 
                         <h3>{{post.title}}</h3> 
                         <p>{{post.content}}</p>
