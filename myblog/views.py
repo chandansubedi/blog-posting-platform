@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect
 from .models import BlogModel
-from .forms import BlogModelForm,BlogUpdateForm 
+from .forms import BlogModelForm,BlogUpdateForm ,CommentForm
 
 # Create your views here.
 def ShowBlogs(request):
@@ -25,10 +25,22 @@ def ShowBlogs(request):
 
 
 def Post_details(request,pk):
+    post = BlogModel.objects.get(id=pk)
+    if request.method == 'POST':
+        c_form = CommentForm(request.POST)
+        if c_form.is_valid():
+            isinstance = c_form.save(commit=False)
+            isinstance.user = request.user
+            isinstance.post = post
+            isinstance.save()
+            return redirect('post_details',pk=post.id)
+    else:
+        c_form = CommentForm()    
     post=BlogModel.objects.get(id=pk)
     context ={
-        'post':post
-    }
+        'post':post,
+        'c_form':c_form 
+    } 
     return render(request,'blogs/post_details.html',context)
 
 
