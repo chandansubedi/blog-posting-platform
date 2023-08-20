@@ -1,0 +1,30 @@
+{% extends 'baseFiles/base.html' %}
+{% load crispy_forms_tags %}
+{% block title %}search{% endblock %}
+{% block content %}
+
+<div class="container">
+    <div class="row mt-5 pt-5">
+        <div class="col-md-12">
+            {% for post in posts %}  
+            <div class="card shadow mb-3 ">
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-md-2">
+                           <small> <img class="img-thumbnail" src="{{post.author.accountmodel.image.url}}" alt="image1"></small>
+                        </div>
+                        <div class="col-md-10">
+                            <small>{{post.date_created}} </small>
+                            <hr>
+                            <a href="{% url 'post_details' post.id %}" class="h3 text-decoration-none">{{post.title}}</a>
+                            <p class="text-justify my-3">{{post.content}}</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</div>
+
+{% endblock %}

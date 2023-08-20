@@ -69,3 +69,13 @@ def Delete_post(request , pk):
         'post':post
     }
     return render(request,'blogs/delete_post.html',context)
+
+
+
+def Search(request):
+    query = request.GET['search']
+    posts = BlogModel.objects.filter(title__icontains=query)
+    context = {
+        'posts':posts
+    }
+    return render(request,'blogs/search.html',context)

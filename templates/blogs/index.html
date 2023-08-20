@@ -7,11 +7,25 @@
 
 
 <!-- Button trigger modal -->
-{% if request.user.is_authenticated %}
-<button type="button" class="btn btn-primary mt-5 ml-5" data-toggle="modal" data-target="#exampleModalLong">
-    Create your Blog
-  </button>
-  {% endif %} 
+
+  <br>
+  <nav class="navbar navbar-light bg-light">
+    <a class="navbar-brand">
+        {% if request.user.is_authenticated %}
+        <button type="button" class="btn btn-primary mt-5 ml-5" data-toggle="modal" data-target="#exampleModalLong">
+            Create your Blog
+          </button>
+          {% else  %}
+          <p  class=" ml-5 btn btn-outline-secondary ">login to create blog</p>
+          {% endif %}
+
+        
+        </a>
+    <form  method="GET" action="/search" class="form-inline">
+      <input name="search" id="search" class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
+      <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+    </form>
+  </nav>
   
   <!-- Modal -->
   <div class="modal fade" id="exampleModalLong" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
@@ -46,6 +60,7 @@
   </div>
   
 <!-- btn  -->
+
 
 
 
