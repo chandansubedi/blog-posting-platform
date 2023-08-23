@@ -1,6 +1,7 @@
 from django.shortcuts import render,redirect
 from django.contrib.auth.forms import UserCreationForm
 from .forms import signUpForm , AccountUpdateForm , UserUpdateForm
+from django.contrib.auth.decorators import login_required
 
 # all about signup function 
 def sign_up(request):
@@ -17,6 +18,7 @@ def sign_up(request):
     return render(request,'Accounts/signup.html',context)
 
 # edit profile of user (change details)
+@login_required
 def userProfile(request):
     if request.method =='POST':
         u_form = UserUpdateForm(request.POST or None ,instance=request.user )

@@ -30,6 +30,7 @@
                         </div>
                     </div>
                     <!-- comment -->
+                    {% if request.user.is_authenticated %}
                     <p class="mt-2">
                         <a class="btn btn-primary" data-toggle="collapse" href="#collapseExample" role="button"
                             aria-expanded="false" aria-controls="collapseExample">
@@ -39,12 +40,18 @@
                     <div class="collapse" id="collapseExample">
                         <div style="height: 250px; overflow-y: scroll;" class=  "card card-body">
                             {% for comment in post.postcomments_set.all  %}
-                            <p class="text-justify">
-                                {{comment.content}}
-                            </p>
+                            <div class=" m-2  row border border-primary">
+                                <div class=" m-2 col-3 border text-success rounded-top">
+                                    {{ comment.user.username }}
+                                </div>
+                                <div class="   col-11  border-top rounded-buttom">
+                                    {{ comment.content }}
+                                </div>
+                            </div>
                            {% endfor %} 
                         </div>
                     </div> 
+
                     <!-- comment -->
                     add comment
                     <form method="POST">
@@ -52,6 +59,7 @@
                         {{c_form | crispy}}
                         <input class="btn btn-secondary" type="submit" value="post comment ">
                     </form>
+                    {% endif %}
                 </div>
             </div>
         </div>
