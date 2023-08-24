@@ -3,111 +3,95 @@
 {% block title %}Home{% endblock %}
 {% block content %}
 
-<!-- btn  -->
+  <!-- btn  -->
 
 
-<!-- Button trigger modal -->
+ <!-- Button trigger modal -->
 
-  <br>
-  <nav class="navbar navbar-light bg-light">
-    <a class="navbar-brand">
-        {% if request.user.is_authenticated %}
-        <button type="button" class="btn btn-primary mt-5 ml-5" data-toggle="modal" data-target="#exampleModalLong">
+      <br>
+      <nav class="navbar navbar-light bg-light">
+        <a class="navbar-brand">
+          {% if request.user.is_authenticated %}
+          <button type="button" class="btn btn-primary mt-5 ml-5" data-toggle="modal" data-target="#exampleModalLong">
             Create your Blog
           </button>
-          {% else  %}
-          <p  class=" ml-5 btn btn-outline-secondary ">login to create blog</p>
+          {% else %}
+          <p class=" ml-5 btn btn-outline-secondary ">login to create blog</p>
           {% endif %}
         </a>
-    <form  method="GET" action="/search" class="form-inline">
-      <input name="search" id="search" class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
-      <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
-    </form>
-  </nav>
-  
-  <!-- Modal -->
-  <div class="modal fade" id="exampleModalLong" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
-    <div class="modal-dialog" role="document">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title" id="exampleModalLongTitle">Modal title</h5>
-          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
-          </button>
-        </div>
-        <div class="modal-body">
-                <div class="col-md-12">
-                <div class="card my-3 shadow ">
-                    <div class="card-body">
-                        <form method="POST">
-                            {% csrf_token %}
-                            {{form | crispy}}
-                            <input type="submit" class="btn btn-primary", value="post">
-                        </form>
-                    </div>
-                </div>
+        <form method="GET" action="/search" class="form-inline">
+          <input name="search" id="search" class="form-control mr-sm-2" type="search" placeholder="Search"
+            aria-label="Search">
+          <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+        </form>
+      </nav>
+
+      <div style="height:3vw ;"  class="  d-flex justify-content-center align-items-center   ml-4 mr-3 bg-success text-white" >
+        <marquee onmouseover="stop()" onmouseout="start()" >
+         
+          {% for post in postsM %}
+          <a style="color: white;" href="{% url 'post_details' post.id %}">{{post.title}}</a> &nbsp; &nbsp; &nbsp; &nbsp;
+          {% endfor %}
+        </marquee>
+      </div>
+
+      <!-- Modal -->
+      <div class="modal fade" id="exampleModalLong" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle"
+        aria-hidden="true">
+        <div class="modal-dialog" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="exampleModalLongTitle">Modal title</h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
             </div>
-          
-        </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-          <button type="button" class="btn btn-primary">Save changes</button>
+            <div class="modal-body">
+              <div class="col-md-12">
+                <div class="card my-3 shadow ">
+                  <div class="card-body">
+                    <form method="POST">
+                      {% csrf_token %}
+                      {{form | crispy}}
+                      <input type="submit" class="btn btn-primary" , value="post">
+                    </form>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+              <button type="button" class="btn btn-primary">Save changes</button>
+            </div>
+          </div>
         </div>
       </div>
-    </div>
-  </div>
-  
-<!-- btn  -->
+
+      <!-- btn  -->
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-<div class="container">
-    <div class="row mt-5 pt-5">
-        <!-- <div class="col-md-4">
-            <div class="card my-3 shadow ">
-                <div class="card-body">
-                    <form method="POST">
-                        {% csrf_token %}
-                        {{form | crispy}}
-                        <input type="submit" class="btn btn-primary", value="post">
-                    </form>
-                </div>
-            </div>
-        </div> -->
-        <div class="col-md-12">
-            {% for post in posts %}  
+      <div class="container">
+        <div class="row mt-5 pt-5">
+          <div class="col-md-12">
+            {% for post in posts %}
             <div class="card shadow mb-3 ">
-                <div class="card-body">
-                    <div class="row">
-                        <div class="col-md-2">
-                           <small> <img class="img-thumbnail" src="{{post.author.accountmodel.image.url}}" alt="image1"></small>
-                        </div>
-                        <div class="col-md-10">
-                            <small>{{post.date_created}} </small>
-                            <hr>
-                            <a href="{% url 'post_details' post.id %}" class="h3 text-decoration-none">{{post.title}}</a>
-                            <p class="text-justify my-3">{{post.content}}</p>
-                        </div>
-                    </div>
+              <div class="card-body">
+                <div class="row">
+                  <div class="col-md-2">
+                    <small> <img class="img-thumbnail" src="{{post.author.accountmodel.image.url}}" alt="image1"></small>
+                  </div>
+                  <div class="col-md-10">
+                    <small>{{post.date_created}} </small>
+                    <hr>
+                    <a href="{% url 'post_details' post.id %}" class="h3 text-decoration-none">{{post.title}}</a>
+                    <p class="text-justify my-3">{{post.content}}</p>
+                  </div>
                 </div>
+              </div>
             </div>
             {% endfor %}
+          </div>
         </div>
-    </div>
-</div>
+      </div>
 
 {% endblock %}

@@ -5,6 +5,7 @@ from django.contrib.auth.decorators import login_required
 
 # Create your views here.
 def ShowBlogs(request):
+    postsM = BlogModel.objects.order_by('-date_created')[:5]
     posts = BlogModel.objects.all()
     if request.method == 'POST':
         form =  BlogModelForm(request.POST)
@@ -15,15 +16,15 @@ def ShowBlogs(request):
             return redirect('ShowBlogs')
     else:
         form =  BlogModelForm()
-
-
     context = {
         'posts':posts,
-        'form':form
+        'form':form,
+        'postsM':postsM
     }
     return render(request ,'blogs/index.html' , context) 
 
-
+def MarqueeNdetails(request,pk):
+    return render(request,'blogs/post_details.html')
 
 def Post_details(request,pk):
     post = BlogModel.objects.get(id=pk)
@@ -80,3 +81,11 @@ def Search(request):
         'posts':posts
     }
     return render(request,'blogs/search.html',context)
+
+# def MarqueeNews(request):
+#     postsM = BlogModel.objects.filter('-created_at')[:5]
+#     context = {
+#         'postsM':postsM
+#     }
+#     return render(request ,'blogs/index.html' , context)
+ 
