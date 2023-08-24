@@ -2,11 +2,15 @@ from django.shortcuts import render, redirect
 from .models import BlogModel
 from .forms import BlogModelForm,BlogUpdateForm ,CommentForm
 from django.contrib.auth.decorators import login_required
+from django.core.paginator import Paginator
 
 # Create your views here.
 def ShowBlogs(request):
     postsM = BlogModel.objects.order_by('-date_created')[:5]
     posts = BlogModel.objects.all()
+    page = Paginator(posts,3)
+    page_list = request.GET.get('page')
+    page = page.get_page(page_list)
     if request.method == 'POST':
         form =  BlogModelForm(request.POST)
         if form.is_valid():
@@ -17,7 +21,7 @@ def ShowBlogs(request):
     else:
         form =  BlogModelForm()
     context = {
-        'posts':posts,
+        'page':page,
         'form':form,
         'postsM':postsM
     }

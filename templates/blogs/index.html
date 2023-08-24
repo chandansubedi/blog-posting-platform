@@ -73,7 +73,7 @@
       <div class="container">
         <div class="row mt-5 pt-5">
           <div class="col-md-12">
-            {% for post in posts %}
+            {% for post in page.object_list %}
             <div class="card shadow mb-3 ">
               <div class="card-body">
                 <div class="row">
@@ -90,6 +90,47 @@
               </div>
             </div>
             {% endfor %}
+          </div>
+        </div>
+      </div>
+
+      <!-- pagination -->
+      <div class="container">
+        <div class="row my-5 ">
+          <div class="col-md-4 offset-md-3  ">
+            <p>Page :{{ page.number }}/ {{page.paginator.num_pages}}</p>
+            <nav aria-label="...">
+              <ul class="pagination">
+                <li class="page-item ">
+                  {% if page.has_previous %}
+                  <a class="page-link" href="{% url 'ShowBlogs' %}?page={{ page.previous_page_number }}" >Previous</a>
+                  {% endif %}
+                </li>
+                {% for num_page in page.paginator.page_range %}
+                <br>
+                {% if page.number == num_page %}
+                
+                <!-- <li class="page-item"><a class="page-link" href="#">1</a></li> -->
+                <li class="page-item active" aria-current="page">
+                  <a class="page-link" href="{% url 'ShowBlogs'%}?page= {{num_page}} ">{{num_page}}</a>
+                </li>
+                {% else %}
+                <li class="page-item " aria-current="page">
+                  <a class="page-link" href="{% url 'ShowBlogs'%}?page= {{num_page}} ">{{num_page}}</a>
+                </li>
+
+                {% endif %}
+                <br>
+                {% endfor %}
+                <!-- <li class="page-item"><a class="page-link" href="#">3</a></li> -->
+                <li class="page-item">
+                  {% if page.has_next %}
+                  <a class="page-link" href="{% url 'ShowBlogs' %}?page={{ page.next_page_number }}">Next</a>
+                  {% endif %}
+                </li>
+              </ul>
+            </nav>
+
           </div>
         </div>
       </div>
