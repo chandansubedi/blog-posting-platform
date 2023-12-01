@@ -137,6 +137,9 @@ STATIC_ROOT = (BASE_DIR /'asset')
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
+sTATICFILES_DIR = [
+    os.path.join(BASE_DIR ,"static" )
+    ]
 
 # for reset 
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
