@@ -16,6 +16,9 @@
                         <div class="col-md-10">
                             <small>{{ post.date_created }}</small>
                             <br>
+                            <small>Accuracy : {{ post.accuracy }}</small>
+                            <br>
+                            <br>
                             <small> Author :{{ post.author.username }}</small>
 
                             {% if post.author == request.user %}
@@ -25,6 +28,7 @@
                                 </a></span>
                             {% endif %}
                             <hr>
+
                             <h3>{{post.title}}</h3>
                             <p>{{post.content}}</p>
                         </div>
@@ -38,8 +42,8 @@
                         </a>
                     </p>
                     <div class="collapse" id="collapseExample">
-                        <div style="height: 250px; overflow-y: scroll;" class=  "card card-body">
-                            {% for comment in post.postcomments_set.all  %}
+                        <div style="height: 250px; overflow-y: scroll;" class="card card-body">
+                            {% for comment in post.postcomments_set.all %}
                             <div class=" m-2  row border border-primary">
                                 <div class=" m-2 col-3 border text-success rounded-top">
                                     {{ comment.user.username }}
@@ -48,9 +52,9 @@
                                     {{ comment.content }}
                                 </div>
                             </div>
-                           {% endfor %} 
+                            {% endfor %}
                         </div>
-                    </div> 
+                    </div>
 
                     <!-- comment -->
                     add comment

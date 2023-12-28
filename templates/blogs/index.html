@@ -2,137 +2,244 @@
 {% load crispy_forms_tags %}
 {% block title %}Home{% endblock %}
 {% block content %}
+<script src="https://kit.fontawesome.com/39e387fceb.js" crossorigin="anonymous"></script>
+<!-- btn  -->
 
-  <!-- btn  -->
+
+<!-- Button trigger modal -->
+
+<br>
+<nav class="navbar navbar-light bg-light">
+  <a class="navbar-brand">
+    {% if request.user.is_authenticated %}
+    <!-- <button type="button" class="btn btn-primary mt-5 ml-5" data-toggle="modal" data-target="#exampleModalLong">
+      Create your Blog
+    </button> -->
+    <p style="font-size:50px; font-weight: bold;" class=" ml-5  ">Fast News <i style="size: 3px;"
+        class="fas fa-newspaper"></i> </p>
+
+    {% else %}
+    <p style="font-size:50px; font-weight: bold;" class=" ml-5  ">Fast News <i style="size: 3px;"
+        class="fas fa-newspaper"></i> </p>
+
+    {% endif %}
+  </a>
+  <form method="GET" action="/search" class="form-inline">
+    <input name="search" id="search" class="form-control mr-sm-2" type="search" placeholder="Search"
+      aria-label="Search">
+    <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+  </form>
+</nav>
+
+<div style="height:3vw ;"
+  class="  d-flex justify-content-center align-items-center  mt-0 ml-0 mr-0 bg-success text-white">
+  <marquee onmouseover="stop()" onmouseout="start()">
+
+    {% for post in postsM %}
+    <a style="color: white;" href="{% url 'post_details' post.id %}">{{post.title}}</a> &nbsp; &nbsp; &nbsp; &nbsp;
+    {% endfor %}
+  </marquee>
+</div>
+
+<!-- Modal -->
+<div class="modal fade" id="exampleModalLong" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle"
+  aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLongTitle">Create News</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div class="col-md-12">
+          <div class="card my-3 shadow ">
+            <div class="card-body">
+              <form method="POST">
+                {% csrf_token %}
+                {{form | crispy}}
+                <input type="submit" class="btn btn-primary" , value="post">
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary">Save changes</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- btn  -->
 
 
- <!-- Button trigger modal -->
+<div class="container-fluid">
+
+  <button type="button " class="btn btn-primary mt-3 d-inline mr-5 " data-toggle="modal"
+    data-target="#exampleModalLong">
+    Create your Blog
+  </button>
+  <p class="d-inline ml-5 mr-5  ">{{ current_datetime_ktm }}</p>
+
+  <p class="d-inline ml-5   ">Weather : {{ city }}</p>
+  <p class="d-inline ml-2    ">{{temperature}}°C</p>
+  <p class="d-inline ml-2    "><img src="http://openweathermap.org/img/w/{{ icon }}.png" alt="Weather Icon"></p>
+
+  <div class="row mt-5 pt-5">
+    <!-- col1 -->
+    <div class="col-md-2 ">
+      <h4>News Category</h4>
+      <br>
 
       <br>
-      <nav class="navbar navbar-light bg-light">
-        <a class="navbar-brand">
-          {% if request.user.is_authenticated %}
-          <button type="button" class="btn btn-primary mt-5 ml-5" data-toggle="modal" data-target="#exampleModalLong">
-            Create your Blog
-          </button>
+      <br>
+      <a class=" btn btn-outline-primary btn-block" href="{% url 'post_category_sport'  %}">Sport</a>
+      <br>
+      <br>
+      <a class=" btn btn-outline-primary btn-block" href="{% url 'post_category_politics'  %}">Politics</a>
+      <br>
+      <br>
+      <a class=" btn btn-outline-primary btn-block" href="{% url 'post_category_health'  %}">Health</a>
+      <br>
+      <br>
+      <a class=" btn btn-outline-primary btn-block" href="{% url 'post_category_weather'  %}">Weather</a>
+      <br>
+      <br>
+    </div>
+
+    <!-- col2 -->
+    <div class="col-md-4 ">
+      <h1>latest news</h1>
+      {% for post in page.object_list %}
+      <div class="card shadow mb-3 ">
+        <div class="card-body">
+          <div class="row">
+            <div class="col-md-5">
+              <small>{{post.date_created}} </small>
+              <small> <img class="img-thumbnail" src="{{post.author.accountmodel.image.url}}" alt="image1"></small>
+            </div>
+            <div class="col-md-7">
+              <hr>
+              <a style="font-size: 15px;" href="{% url 'post_details' post.id %}"
+                class=" text-decoration-none">{{post.title}}</a>
+              <p style="font-size: 14px;" class="text-justify my-3">{{post.content|truncatechars:50}}</p>
+            </div>
+          </div>
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+
+
+    <!-- col3 -->
+    <div class="col-md-3 ">
+      <p class="text-danger mb-4  h5 ">MOST READ</p>
+
+      {% for post in most_commented_posts %}
+
+      <div class="card shadow mb-3 mt-1 ">
+        <div class="card-body">
+          <div class="row">
+
+            <div class="col-md-12">
+              <small>{{post.author}} </small>
+              <hr>
+              <a href="{% url 'post_details' post.id %}" class="h6 text-decoration-none">{{post.title}}</a>
+
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- <li>{{ post.title }}  {{ post.comment_count }} </li> -->
+      <!-- <a href="{% url 'post_details' post.id %}" class="h6 text-decoration-none">{{post.title }}</a> -->
+
+      {% endfor %}
+
+
+
+    </div>
+
+
+
+
+    <!-- col4 -->
+    <div class="col-md-3 ">
+      <p class="text-danger h5">SPORTS</p>
+      {% for sports in sportTitle%}
+      <div class="card shadow mb-3  ">
+        <div class="card-body">
+          <div class="row">
+            <div class="col-md-5">
+              <small>{{sports.date_created}} </small>
+              
+              <small> <img class="img-thumbnail" src="{{sports.author.accountmodel.image.url}}" alt="image1"></small>
+            </div>
+            <div class="col-md-7">
+              <hr>
+              <a href="{% url 'post_details' sports.id %}" class="h6 text-decoration-none">{{sports.title}}</a>
+
+            </div>
+          </div>
+        </div>
+      </div>
+
+
+
+
+      {% endfor %}
+
+    </div>
+
+
+
+
+  </div>
+</div>
+
+
+<!-- pagination -->
+<div class="container">
+  <div class="row my-5 ">
+    <div class="col-md-4 offset-md-3  ">
+      <p>Page :{{ page.number }}/ {{page.paginator.num_pages}}</p>
+      <nav aria-label="...">
+        <ul class="pagination">
+          <li class="page-item ">
+            {% if page.has_previous %}
+            <a class="page-link" href="{% url 'ShowBlogs' %}?page={{ page.previous_page_number }}">Previous</a>
+            {% endif %}
+          </li>
+          {% for num_page in page.paginator.page_range %}
+          <br>
+          {% if page.number == num_page %}
+
+          <!-- <li class="page-item"><a class="page-link" href="#">1</a></li> -->
+          <li class="page-item active" aria-current="page">
+            <a class="page-link" href="{% url 'ShowBlogs'%}?page= {{num_page}} ">{{num_page}}</a>
+          </li>
           {% else %}
-          <p class=" ml-5 btn btn-outline-secondary ">login to create blog</p>
+          <li class="page-item " aria-current="page">
+            <a class="page-link" href="{% url 'ShowBlogs'%}?page= {{num_page}} ">{{num_page}}</a>
+          </li>
+
           {% endif %}
-        </a>
-        <form method="GET" action="/search" class="form-inline">
-          <input name="search" id="search" class="form-control mr-sm-2" type="search" placeholder="Search"
-            aria-label="Search">
-          <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
-        </form>
+          <br>
+          {% endfor %}
+          <!-- <li class="page-item"><a class="page-link" href="#">3</a></li> -->
+          <li class="page-item">
+            {% if page.has_next %}
+            <a class="page-link" href="{% url 'ShowBlogs' %}?page={{ page.next_page_number }}">Next</a>
+            {% endif %}
+          </li>
+        </ul>
       </nav>
 
-      <div style="height:3vw ;"  class="  d-flex justify-content-center align-items-center   ml-4 mr-3 bg-success text-white" >
-        <marquee onmouseover="stop()" onmouseout="start()" >
-         
-          {% for post in postsM %}
-          <a style="color: white;" href="{% url 'post_details' post.id %}">{{post.title}}</a> &nbsp; &nbsp; &nbsp; &nbsp;
-          {% endfor %}
-        </marquee>
-      </div>
-
-      <!-- Modal -->
-      <div class="modal fade" id="exampleModalLong" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle"
-        aria-hidden="true">
-        <div class="modal-dialog" role="document">
-          <div class="modal-content">
-            <div class="modal-header">
-              <h5 class="modal-title" id="exampleModalLongTitle">Modal title</h5>
-              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                <span aria-hidden="true">&times;</span>
-              </button>
-            </div>
-            <div class="modal-body">
-              <div class="col-md-12">
-                <div class="card my-3 shadow ">
-                  <div class="card-body">
-                    <form method="POST">
-                      {% csrf_token %}
-                      {{form | crispy}}
-                      <input type="submit" class="btn btn-primary" , value="post">
-                    </form>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div class="modal-footer">
-              <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-              <button type="button" class="btn btn-primary">Save changes</button>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <!-- btn  -->
-
-
-      <div class="container">
-        <div class="row mt-5 pt-5">
-          <div class="col-md-12">
-            {% for post in page.object_list %}
-            <div class="card shadow mb-3 ">
-              <div class="card-body">
-                <div class="row">
-                  <div class="col-md-2">
-                    <small> <img class="img-thumbnail" src="{{post.author.accountmodel.image.url}}" alt="image1"></small>
-                  </div>
-                  <div class="col-md-10">
-                    <small>{{post.date_created}} </small>
-                    <hr>
-                    <a href="{% url 'post_details' post.id %}" class="h3 text-decoration-none">{{post.title}}</a>
-                    <p class="text-justify my-3">{{post.content}}</p>
-                  </div>
-                </div>
-              </div>
-            </div>
-            {% endfor %}
-          </div>
-        </div>
-      </div>
-
-      <!-- pagination -->
-      <div class="container">
-        <div class="row my-5 ">
-          <div class="col-md-4 offset-md-3  ">
-            <p>Page :{{ page.number }}/ {{page.paginator.num_pages}}</p>
-            <nav aria-label="...">
-              <ul class="pagination">
-                <li class="page-item ">
-                  {% if page.has_previous %}
-                  <a class="page-link" href="{% url 'ShowBlogs' %}?page={{ page.previous_page_number }}" >Previous</a>
-                  {% endif %}
-                </li>
-                {% for num_page in page.paginator.page_range %}
-                <br>
-                {% if page.number == num_page %}
-                
-                <!-- <li class="page-item"><a class="page-link" href="#">1</a></li> -->
-                <li class="page-item active" aria-current="page">
-                  <a class="page-link" href="{% url 'ShowBlogs'%}?page= {{num_page}} ">{{num_page}}</a>
-                </li>
-                {% else %}
-                <li class="page-item " aria-current="page">
-                  <a class="page-link" href="{% url 'ShowBlogs'%}?page= {{num_page}} ">{{num_page}}</a>
-                </li>
-
-                {% endif %}
-                <br>
-                {% endfor %}
-                <!-- <li class="page-item"><a class="page-link" href="#">3</a></li> -->
-                <li class="page-item">
-                  {% if page.has_next %}
-                  <a class="page-link" href="{% url 'ShowBlogs' %}?page={{ page.next_page_number }}">Next</a>
-                  {% endif %}
-                </li>
-              </ul>
-            </nav>
-
-          </div>
-        </div>
-      </div>
+    </div>
+  </div>
+</div>
 
 {% endblock %}

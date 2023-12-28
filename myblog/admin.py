@@ -10,3 +10,4 @@ class BlogModelAdmin(admin.ModelAdmin):
 
 admin.site.register(BlogModel,BlogModelAdmin)
 admin.site.register(PostComments)
+# admin.site.register(City)
