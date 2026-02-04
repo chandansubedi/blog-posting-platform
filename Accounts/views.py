@@ -34,4 +34,4 @@ def userProfile(request):
         'u_form':u_form,
         'p_form':p_form
     }
-    return render(request, 'accounts/usersProfile.html',context)
+    return render(request, 'Accounts/usersProfile.html',context)
